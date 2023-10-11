@@ -3,7 +3,7 @@ let game;
 const gameOptions = {
     gravity: 800,
     playerSpeed: 300,
-
+    jumpForce: 450,
 }
 
 
@@ -97,6 +97,11 @@ class Main extends Phaser.Scene {
         
         // HACK: moving ground instead of making level scrollable (maybe FIXME?)
         this.groundGroup.setVelocityX(moveDir * gameOptions.playerSpeed)
-    
+        
+        // Player jumping 
+        if (this.cursors.up.isDown && this.player.body.touching.down) {
+            this.player.body.velocity.y = - gameOptions.jumpForce;
+        }
+
     }
 }
