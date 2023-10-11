@@ -50,6 +50,11 @@ class Main extends Phaser.Scene {
             }
         }
 
+        // adding platforms to the game
+        // TODO: different texture for these
+        this.addPlatform(3, 300, game.config.height / 2)
+
+
         // adding player to the scene
         this.player = this.physics.add.sprite(game.config.width / 2, game.config.height / 2, "player")
        
@@ -104,4 +109,13 @@ class Main extends Phaser.Scene {
         }
 
     }
+
+    addPlatform(width, startPosX, posY) {
+        for (let i = 0; i < width; i++) {
+            let block = this.groundGroup.create(startPosX + (i * 36), posY, "groundBlock")
+            block.scale = 0.1
+        }
+
+    }
+
 }
