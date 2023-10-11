@@ -3,7 +3,7 @@ let game;
 const gameOptions = {
     gravity: 800,
     playerSpeed: 300,
-    jumpForce: 450,
+    jumpForce: 500,
 }
 
 
@@ -81,6 +81,8 @@ class Main extends Phaser.Scene {
             frames: [{key: "player", frame: 2}],
         })
 
+        this.cameras.main.startFollow(this.player, true, 0.1, 0, 0, 30)
+
     }
 
     update() {
@@ -88,20 +90,19 @@ class Main extends Phaser.Scene {
         // Movement
         // TODO: Add somekind of lerp so the player movement start isn't so abrupt
 
-        // NOTE: move directions are from the perspective of the ground (player moves left -> ground needs to move right)
         let moveDir = 0;
         if (this.cursors.left.isDown) {
-            moveDir = 1;
+            moveDir = -1;
             this.player.anims.play("left", true)
         } else if (this.cursors.right.isDown) {
-            moveDir = -1;
+            moveDir = 1;
             this.player.anims.play("right", true)
         } else {
             this.player.anims.play("still", true)
         }
-        
-        // HACK: moving ground instead of making level scrollable (maybe FIXME?)
-        this.groundGroup.setVelocityX(moveDir * gameOptions.playerSpeed)
+       
+        // moving the actual player
+        this.player.body.velocity.x = gameOptions.playerSpeed * moveDir
         
         // Player jumping 
         if (this.cursors.up.isDown && this.player.body.touching.down) {
@@ -115,7 +116,6 @@ class Main extends Phaser.Scene {
             let block = this.groundGroup.create(startPosX + (i * 36), posY, "groundBlock")
             block.scale = 0.1
         }
-
     }
 
 }
