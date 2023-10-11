@@ -32,7 +32,7 @@ class Main extends Phaser.Scene {
 
     preload() {
         this.load.image("groundBlock", "./assets/images/Ground_SMB.png") // TODO: change to something copyright free
-        this.load.spritesheet("player", "./assets/sprites/player_sprite_fixed.png", {frameWidth: 35, frameHeight: 60})
+        this.load.spritesheet("player", "./assets/sprites/player_sprite.png", {frameWidth: 35, frameHeight: 60})
     }
 
     create() {
