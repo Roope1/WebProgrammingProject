@@ -34,11 +34,8 @@ class Level1 extends Phaser.Scene {
         addPlatform(3, 300, game.config.height / 2, "groundBlock", this)
 
         // adding enemies
-        let enemy = this.enemyGroup.create(800, game.config.height / 2, "enemy")
-        enemy.scale = 0.2
-        // adding gravity to enemies 
-        enemy.setGravityY(gameOptions.gravity)
-
+        addEnemy(800, game.config.height / 2, "enemy", gameOptions.gravity, this)
+        
         // colliders between enemy and ground
         this.physics.add.collider(this.enemyGroup, this.groundGroup)
         
@@ -105,6 +102,7 @@ class Level1 extends Phaser.Scene {
 
     checkHit(player, enemy) {
         // player needs to hit the enemy from top to kill enemy, otherwise player dies
+        // FIXME: anything that touches the top of an enemy kills it, not just the player
         if (enemy.body.touching.up) {
             console.log("enemy died")
             enemy.disableBody(true, true)
