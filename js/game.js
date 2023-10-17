@@ -20,7 +20,10 @@ window.onload = () => {
         physics: {
             default: "arcade",
         },
-        scene: Level1
+        scene: [
+            Menu,
+            Level1
+        ]
     }
 
     game = new Phaser.Game(gameConfig)
