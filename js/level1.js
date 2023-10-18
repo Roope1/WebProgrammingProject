@@ -6,7 +6,7 @@ class Level1 extends Phaser.Scene {
 
     preload() {
         this.load.image("groundBlock", "./assets/images/Ground_SMB.png") // TODO: change to something copyright free
-        this.load.spritesheet("player", "./assets/sprites/player_sprite.png", {frameWidth: 35, frameHeight: 60})
+        this.load.spritesheet("player", "./assets/sprites/player_sprite.png", { frameWidth: 35, frameHeight: 60 })
         this.load.image("enemy", "./assets/images/goomba.jpg")
     }
 
@@ -20,30 +20,34 @@ class Level1 extends Phaser.Scene {
             allowGravity: true
         })
 
-        // creating the ground layer
-        for (let i = 0; i < 40; i++){
-            for (let j = 0; j < 4; j++){
-                let block = this.groundGroup.create(36 * i , game.config.height / 1.2 + (36 * j), "groundBlock")
-                block.scale = 0.1
-
-            }
-        }
+        this.createGround()
 
         // adding platforms to the game
-        // TODO: different texture for these
-        addPlatform(3, 300, game.config.height / 2, "groundBlock", this)
+        // start platform
+        addPlatform(3, 540, game.config.height / 2, "groundBlock", this)
+
+        // mid level "ramp"
+        for (let i = 0; i < 4; i++) {
+            addPlatform(4 - i, 1298 + (i * 36), game.config.height / 1.2 - ((i + 1) * 36), "groundBlock", this)
+        }
+
+        // platfroms on top of big hole
+        addPlatform(3, 2748, game.config.height / 2, "groundBlock", this)
 
         // adding enemies
-        addEnemy(800, game.config.height / 2, "enemy", gameOptions.gravity, this)
-        
+        addEnemy(1000, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
+        addEnemy(1060, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
+        addEnemy(1120, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
+
+
         // colliders between enemy and ground
         this.physics.add.collider(this.enemyGroup, this.groundGroup)
-        
+
         // adding player to the scene
         this.player = this.physics.add.sprite(game.config.width / 2, game.config.height / 2, "player")
-        
+
         this.player.body.gravity.y = gameOptions.gravity
-        
+
         this.physics.add.collider(this.player, this.groundGroup)
         this.physics.add.overlap(this.player, this.enemyGroup, this.checkHit, null, this)
 
@@ -53,21 +57,24 @@ class Level1 extends Phaser.Scene {
         // playerAnimations
         this.anims.create({
             key: "left",
-            frames: this.anims.generateFrameNumbers("player", {start: 0, end: 1}),
+            frames: this.anims.generateFrameNumbers("player", { start: 0, end: 1 }),
         })
 
         this.anims.create({
-            key:"right",
-            frames: this.anims.generateFrameNumbers("player", {start: 3, end: 4})
+            key: "right",
+            frames: this.anims.generateFrameNumbers("player", { start: 3, end: 4 })
         })
 
         this.anims.create({
             key: "still",
-            frames: [{key: "player", frame: 2}],
+            frames: [{ key: "player", frame: 2 }],
         })
 
+        // camera should follow player on x-axis
         this.cameras.main.startFollow(this.player, true, 0.1, 0, 0, 30)
 
+        // enemies should always be moving left
+        this.enemyGroup.setVelocityX(-100)
     }
 
     update() {
@@ -85,18 +92,19 @@ class Level1 extends Phaser.Scene {
         } else {
             this.player.anims.play("still", true)
         }
-       
+
         // moving the actual player
         this.player.body.velocity.x = gameOptions.playerSpeed * moveDir
-        
+
         // Player jumping 
         if (this.cursors.up.isDown && this.player.body.touching.down) {
             this.player.body.velocity.y = - gameOptions.jumpForce;
         }
 
-
-        // enemies should always be moving left
-        this.enemyGroup.setVelocityX(-100)
+        // kill player if its off the bottom of the screen
+        if (this.player.y > game.config.height) {
+            this.killPlayer()
+        }
 
     }
 
@@ -106,11 +114,46 @@ class Level1 extends Phaser.Scene {
         if (enemy.body.touching.up) {
             console.log("enemy died")
             enemy.disableBody(true, true)
+            // player should bounce on kill
+            player.body.velocity.y = - gameOptions.jumpForce * 0.7
         } else {
-            this.scene.start("Level1")
+            this.killPlayer()
+        }
+    }
+
+    killPlayer() {
+        // some kind of death animation
+        this.scene.start("Level1")
+    }
+
+
+    createGround() {
+        // creating the ground layer part 1 (before hole)
+        for (let i = 0; i < 40; i++) {
+            for (let j = 0; j < 4; j++) {
+                let block = this.groundGroup.create(36 * i, game.config.height / 1.2 + (36 * j), "groundBlock")
+                block.scale = 0.1
+
+            }
         }
 
+        // creating ground layer part 2 (between holes)
+        for (let i = 0; i < 25; i++) {
+            for (let j = 0; j < 4; j++) {
+                let block = this.groundGroup.create(1700 + 36 * i, game.config.height / 1.2 + (36 * j), "groundBlock")
+                block.scale = 0.1
+
+            }
+        }
+
+        // creating ground layer part 3 (final part)
+        for (let i = 0; i < 25; i++) {
+            for (let j = 0; j < 4; j++) {
+                let block = this.groundGroup.create(3016 + 36 * i, game.config.height / 1.2 + (36 * j), "groundBlock")
+                block.scale = 0.1
+
+            }
+        }
     }
-   
 
 }
