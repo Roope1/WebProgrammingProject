@@ -75,7 +75,6 @@ class Level1 extends Phaser.Scene {
 
         // enemies should always be moving left
         this.enemyGroup.setVelocityX(-100)
-        let wave2Spawned = false
     }
 
     update() {
@@ -117,6 +116,14 @@ class Level1 extends Phaser.Scene {
             this.enemyGroup.setVelocityX(-100)
         }
 
+        if (!this.wave3Spawned && this.player.x > 3016) {
+            console.log("spawning wave 3 of enemies")
+            this.wave3Spawned = true;
+
+            addEnemy(3600, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
+            addEnemy(3700, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
+            this.enemyGroup.setVelocityX(-100)
+        }
     }
 
     checkHit(player, enemy) {
@@ -144,7 +151,6 @@ class Level1 extends Phaser.Scene {
             for (let j = 0; j < 4; j++) {
                 let block = this.groundGroup.create(36 * i, game.config.height / 1.2 + (36 * j), "groundBlock")
                 block.scale = 0.1
-
             }
         }
 
@@ -153,7 +159,6 @@ class Level1 extends Phaser.Scene {
             for (let j = 0; j < 4; j++) {
                 let block = this.groundGroup.create(1700 + 36 * i, game.config.height / 1.2 + (36 * j), "groundBlock")
                 block.scale = 0.1
-
             }
         }
 
@@ -162,9 +167,7 @@ class Level1 extends Phaser.Scene {
             for (let j = 0; j < 4; j++) {
                 let block = this.groundGroup.create(3016 + 36 * i, game.config.height / 1.2 + (36 * j), "groundBlock")
                 block.scale = 0.1
-
             }
         }
     }
-
 }
