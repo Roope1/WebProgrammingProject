@@ -75,6 +75,7 @@ class Level1 extends Phaser.Scene {
 
         // enemies should always be moving left
         this.enemyGroup.setVelocityX(-100)
+        let wave2Spawned = false
     }
 
     update() {
@@ -104,6 +105,16 @@ class Level1 extends Phaser.Scene {
         // kill player if its off the bottom of the screen
         if (this.player.y > game.config.height) {
             this.killPlayer()
+        }
+
+        if (!this.wave2Spawned && this.player.x > 1700) {
+            console.log("spawning wave 2 of enemies")
+            this.wave2Spawned = true;
+
+            addEnemy(2400, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
+            addEnemy(2450, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
+            addEnemy(2500, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
+            this.enemyGroup.setVelocityX(-100)
         }
 
     }
