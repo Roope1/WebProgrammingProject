@@ -85,11 +85,14 @@ class Level1 extends Phaser.Scene {
         this.enemyGroup.setVelocityX(-100)
 
 
+        // get volume from sessionStorage
+        this.volume = sessionStorage.getItem("volume")
+
         // adding sounds
-        this.walk = this.sound.add("walk", {volume: 0.7})
-        this.jump = this.sound.add("jump", {volume: 0.3})
-        this.gameOver = this.sound.add("gameOver", {volume: 0.2})
-        this.ambient = this.sound.add("background", {volume: 0.5})
+        this.walk = this.sound.add("walk", {volume: 0.7 * this.volume})
+        this.jump = this.sound.add("jump", {volume: 0.3 * this.volume})
+        this.gameOver = this.sound.add("gameOver", {volume: 0.2 * this.volume})
+        this.ambient = this.sound.add("background", {volume: 0.5 * this.volume})
         this.ambient.play()
     }
 
@@ -165,7 +168,6 @@ class Level1 extends Phaser.Scene {
         this.ambient.stop()
         this.gameOver.play()
 
-        // TODO: add time before 
         this.scene.start("Level1")
     }
 
