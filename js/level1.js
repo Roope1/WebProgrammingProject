@@ -5,9 +5,17 @@ class Level1 extends Phaser.Scene {
     }
 
     preload() {
+        // images and sprites
         this.load.image("groundBlock", "./assets/images/Ground_SMB.png") // TODO: change to something copyright free
         this.load.spritesheet("player", "./assets/sprites/player_sprite.png", { frameWidth: 35, frameHeight: 60 })
         this.load.image("enemy", "./assets/images/goomba.jpg")
+
+        //sounds
+        this.load.audio("walk", "./assets/sounds/walk.mp3")
+        this.load.audio("gameOver", "./assets/sounds/failure-2-89169.mp3")
+        this.load.audio("jump", "./assets/sounds/cartoon-jump-6462.mp3")
+        this.load.audio("background", "./assets/sounds/cottagecore-17463.mp3")
+
     }
 
     create() {
@@ -75,6 +83,14 @@ class Level1 extends Phaser.Scene {
 
         // enemies should always be moving left
         this.enemyGroup.setVelocityX(-100)
+
+
+        // adding sounds
+        this.walk = this.sound.add("walk", {volume: 0.7})
+        this.jump = this.sound.add("jump", {volume: 0.3})
+        this.gameOver = this.sound.add("gameOver", {volume: 0.2})
+        this.ambient = this.sound.add("background", {volume: 0.5})
+        this.ambient.play()
     }
 
     update() {
@@ -93,12 +109,17 @@ class Level1 extends Phaser.Scene {
             this.player.anims.play("still", true)
         }
 
+        if (moveDir != 0 && !this.walk.isPlaying && this.player.body.touching.down) {
+            this.walk.play()
+        }
+
         // moving the actual player
         this.player.body.velocity.x = gameOptions.playerSpeed * moveDir
 
         // Player jumping 
         if (this.cursors.up.isDown && this.player.body.touching.down) {
             this.player.body.velocity.y = - gameOptions.jumpForce;
+            this.jump.play()
         }
 
         // kill player if its off the bottom of the screen
@@ -141,6 +162,10 @@ class Level1 extends Phaser.Scene {
 
     killPlayer() {
         // some kind of death animation
+        this.ambient.stop()
+        this.gameOver.play()
+
+        // TODO: add time before 
         this.scene.start("Level1")
     }
 
