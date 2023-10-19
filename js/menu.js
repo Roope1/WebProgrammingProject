@@ -1,5 +1,9 @@
 class Menu extends Phaser.Scene {
 
+    constructor() {
+        super("Menu")
+    }
+
     preload() {
         this.load.image("volumeOn", "./assets/images/volumeOn.png")
         this.load.image("volumeOff", "./assets/images/volumeOff.png")

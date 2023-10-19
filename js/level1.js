@@ -94,6 +94,10 @@ class Level1 extends Phaser.Scene {
         this.gameOver = this.sound.add("gameOver", {volume: 0.2 * this.volume})
         this.ambient = this.sound.add("background", {volume: 0.5 * this.volume})
         this.ambient.play()
+
+        // back to menu on esc pressed
+        this.input.keyboard.on("keydown-ESC",(event) => { this.scene.start("Menu")}, this)
+
     }
 
     update() {
