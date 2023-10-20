@@ -18,6 +18,13 @@ class Menu extends Phaser.Scene {
             this.scene.start("Level1")
         })
         
+        const level2Btn = this.add.text(100, 150, "Play2", { fill: "#fff"})
+        level2Btn.setInteractive();
+
+        level2Btn.on('pointerup', () => {
+            console.log("Loading level 2")
+            this.scene.start("Level2")
+        })
         const volume = this.add.image(game.config.width - 50, game.config.height - 50, "volumeOn")
         volume.scale = 0.1
         volume.setInteractive();

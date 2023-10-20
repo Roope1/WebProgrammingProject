@@ -141,7 +141,7 @@ class Level1 extends Phaser.Scene {
 
         // kill player if its off the bottom of the screen
         if (this.player.y > game.config.height) {
-            this.killPlayer()
+            killPlayer()
         }
 
         if (!this.wave2Spawned && this.player.x > 1700) {
@@ -173,18 +173,9 @@ class Level1 extends Phaser.Scene {
             // player should bounce on kill
             player.body.velocity.y = - gameOptions.jumpForce * 0.7
         } else {
-            this.killPlayer()
+            killPlayer()
         }
     }
-
-    killPlayer() {
-        // some kind of death animation
-        this.ambient.stop()
-        this.gameOver.play()
-
-        this.scene.start("Level1")
-    }
-
 
     createGround() {
         // creating the ground layer part 1 (before hole)

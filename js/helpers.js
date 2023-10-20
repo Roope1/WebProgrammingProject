@@ -14,3 +14,11 @@ const addEnemy = (posX, posY, texture, gravity, object) => {
 
     return enemy
 }
+
+const killPlayer = (object) => {
+    // some kind of death animation
+    object.ambient.stop()
+    object.gameOver.play()
+
+    object.scene.start("Level1")
+}
