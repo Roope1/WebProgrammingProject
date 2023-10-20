@@ -79,7 +79,7 @@ class Level1 extends Phaser.Scene {
         })
 
         // camera should follow player on x-axis
-        this.cameras.main.startFollow(this.player, true, 0.1, 0, 0, 30)
+        this.cameras.main.startFollow(this.player, true, 1, 0, 0, 30)
 
         // enemies should always be moving left
         this.enemyGroup.setVelocityX(-100)
@@ -98,13 +98,23 @@ class Level1 extends Phaser.Scene {
         // back to menu on esc pressed
         this.input.keyboard.on("keydown-ESC",(event) => { this.scene.start("Menu")}, this)
 
-    }
+        // "score"
+        this.score = 300
+        this.scoreText = this.add.text(32 , 32, `Score: ${this.score}`, {fill: "#fff"})
+        this.scoreText.scrollFactorX = 0
+        this.scoreText.scrollFactorY = 0
 
+        this.startTime = Date.now()
+        this.startScore = 300;
+    }
+    
     update() {
+     
+        // Adjusting score to be removed 1 per second (not per frame)
+        this.score = this.startScore - (Math.floor((Date.now() - this.startTime) / 1000))
+        this.scoreText.setText(`Score: ${this.score}`)
 
         // Movement
-        // TODO: Add somekind of lerp so the player movement start isn't so abrupt
-
         let moveDir = 0;
         if (this.cursors.left.isDown) {
             moveDir = -1;
