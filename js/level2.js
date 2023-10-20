@@ -123,7 +123,7 @@ class Level2 extends Phaser.Scene {
 
         // kill player if its off the bottom of the screen
         if (this.player.y > game.config.height) {
-            killPlayer()
+            killPlayer(this)
         }
 
 

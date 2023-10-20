@@ -141,7 +141,7 @@ class Level1 extends Phaser.Scene {
 
         // kill player if its off the bottom of the screen
         if (this.player.y > game.config.height) {
-            killPlayer()
+            killPlayer(this)
         }
 
         if (!this.wave2Spawned && this.player.x > 1700) {
@@ -173,7 +173,7 @@ class Level1 extends Phaser.Scene {
             // player should bounce on kill
             player.body.velocity.y = - gameOptions.jumpForce * 0.7
         } else {
-            killPlayer()
+            killPlayer(this)
         }
     }
 
