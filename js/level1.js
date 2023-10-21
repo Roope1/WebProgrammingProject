@@ -102,7 +102,10 @@ class Level1 extends Phaser.Scene {
         this.ambient.play()
 
         // back to menu on esc pressed
-        this.input.keyboard.on("keydown-ESC",(event) => { this.scene.start("Menu")}, this)
+        this.input.keyboard.on("keydown-ESC",(event) => { 
+            this.ambient.stop()
+            this.scene.start("Menu")
+        }, this)
 
         // "score"
         this.score = 300

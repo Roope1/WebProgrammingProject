@@ -79,10 +79,13 @@ class Level2 extends Phaser.Scene {
         this.jump = this.sound.add("jump", { volume: 0.3 * this.volume })
         this.gameOver = this.sound.add("gameOver", { volume: 0.2 * this.volume })
         this.ambient = this.sound.add("background", { volume: 0.5 * this.volume })
-        this.ambient.play()
+        //this.ambient.play()
 
         // back to menu on esc pressed
-        this.input.keyboard.on("keydown-ESC", (event) => { this.scene.start("Menu") }, this)
+        this.input.keyboard.on("keydown-ESC",(event) => { 
+            this.ambient.stop()
+            this.scene.start("Menu")
+        }, this)
 
         // "score"
         this.scoreText = this.add.text(32, 32, `Score: ${this.score}`, { fill: "#fff" })
