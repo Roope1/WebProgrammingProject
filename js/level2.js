@@ -30,8 +30,10 @@ class Level2 extends Phaser.Scene {
         // add ground
         addPlatform(25, 0, game.config.height / 1.2, "groundBlock", this)
 
-
-        // TODO: add platforms to climb up on
+        // player should climb up 20? platforms that are randomly distributed on the x-axis 
+        for (let i = 0; i < 20; i++) {
+            addPlatform(7, Phaser.Math.Between(0, game.config.width - 7 * 36), game.config.height / 1.2 - (i * 120), "groundBlock", this)
+        }
 
 
         // colliders between enemy and ground
