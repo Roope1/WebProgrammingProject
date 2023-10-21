@@ -23,7 +23,8 @@ window.onload = () => {
         scene: [
             Menu,
             Level1,  // TODO: add menu back before submitting
-            Level2
+            Level2,
+            Win,
         ]
     }
 

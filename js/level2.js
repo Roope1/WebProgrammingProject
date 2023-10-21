@@ -15,7 +15,6 @@ class Level2 extends Phaser.Scene {
         this.load.audio("gameOver", "./assets/sounds/failure-2-89169.mp3")
         this.load.audio("jump", "./assets/sounds/cartoon-jump-6462.mp3")
         this.load.audio("background", "./assets/sounds/cottagecore-17463.mp3")
-
     }
 
     create() {
@@ -79,7 +78,6 @@ class Level2 extends Phaser.Scene {
         this.jump = this.sound.add("jump", { volume: 0.3 * this.volume })
         this.gameOver = this.sound.add("gameOver", { volume: 0.2 * this.volume })
         this.ambient = this.sound.add("background", { volume: 0.5 * this.volume })
-        //this.ambient.play()
 
         // back to menu on esc pressed
         this.input.keyboard.on("keydown-ESC",(event) => { 
@@ -98,7 +96,6 @@ class Level2 extends Phaser.Scene {
         // add portal to "win"
         this.portal = this.physics.add.image(game.config.width / 2, -2240, "portal")
         this.physics.add.overlap(this.player, this.portal, this.nextLevel, null, this)
-
     }
 
     update() {
@@ -136,13 +133,12 @@ class Level2 extends Phaser.Scene {
         if (this.player.y > game.config.height) {
             killPlayer(this)
         }
-
-
     }
 
-
     nextLevel() {
+        // TODO: go to win scene and report score
         console.log("you won with score" + this.score)
         sessionStorage.setItem("score", this.score)
+        this.scene.start("Win")
     }
 }
