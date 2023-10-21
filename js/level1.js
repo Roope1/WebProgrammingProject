@@ -9,6 +9,7 @@ class Level1 extends Phaser.Scene {
         this.load.image("groundBlock", "./assets/images/Ground_SMB.png") // TODO: change to something copyright free
         this.load.spritesheet("player", "./assets/sprites/player_sprite.png", { frameWidth: 35, frameHeight: 60 })
         this.load.image("enemy", "./assets/images/goomba.jpg")
+        this.load.image("portal", "./assets/images/portal.png")
 
         //sounds
         this.load.audio("walk", "./assets/sounds/walk.mp3")
@@ -54,10 +55,15 @@ class Level1 extends Phaser.Scene {
         // adding player to the scene
         this.player = this.physics.add.sprite(game.config.width / 2, game.config.height / 2, "player")
 
+        //player gravity
         this.player.body.gravity.y = gameOptions.gravity
 
         this.physics.add.collider(this.player, this.groundGroup)
         this.physics.add.overlap(this.player, this.enemyGroup, this.checkHit, null, this)
+
+        // adding portal to level 2 
+        this.portal = this.physics.add.image(3800, game.config.height / 2, "portal")
+        this.physics.add.overlap(this.player, this.portal, this.nextLevel, null, this)
 
         // get keyboard inputs
         this.cursors = this.input.keyboard.createCursorKeys()
@@ -201,5 +207,11 @@ class Level1 extends Phaser.Scene {
                 block.scale = 0.1
             }
         }
+    }
+
+    nextLevel() {
+        console.log("loading next level")
+        sessionStorage.setItem("score", this.score)
+        this.scene.start("Level2")
     }
 }

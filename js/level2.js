@@ -8,6 +8,7 @@ class Level2 extends Phaser.Scene {
         this.load.image("groundBlock", "./assets/images/Ground_SMB.png") // TODO: change to something copyright free
         this.load.spritesheet("player", "./assets/sprites/player_sprite.png", { frameWidth: 35, frameHeight: 60 })
         this.load.image("enemy", "./assets/images/goomba.jpg")
+        this.load.image("portal", "./assets/images/portal.png")
 
         //sounds
         this.load.audio("walk", "./assets/sounds/walk.mp3")
@@ -90,6 +91,11 @@ class Level2 extends Phaser.Scene {
 
         this.startTime = Date.now()
         this.startScore = sessionStorage.getItem("score")
+
+        // add portal to "win"
+        this.portal = this.physics.add.image(game.config.width / 2, -2240, "portal")
+        this.physics.add.overlap(this.player, this.portal, this.nextLevel, null, this)
+
     }
 
     update() {
@@ -129,5 +135,11 @@ class Level2 extends Phaser.Scene {
         }
 
 
+    }
+
+
+    nextLevel() {
+        console.log("you won with score" + this.score)
+        sessionStorage.setItem("score", this.score)
     }
 }
