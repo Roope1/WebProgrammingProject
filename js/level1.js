@@ -8,7 +8,7 @@ class Level1 extends Phaser.Scene {
         // images and sprites
         this.load.image("groundBlock", "./assets/images/Ground.png")
         this.load.spritesheet("player", "./assets/sprites/player_sprite.png", { frameWidth: 35, frameHeight: 60 })
-        this.load.image("enemy", "./assets/images/goomba.jpg")
+        this.load.image("enemy", "./assets/images/enemy.png")
         this.load.image("portal", "./assets/images/portal.png")
 
         //sounds
