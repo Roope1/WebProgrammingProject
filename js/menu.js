@@ -17,7 +17,7 @@ class Menu extends Phaser.Scene {
             fontSize: "68px"
         }
 
-        this.add.text(32, 32, "Taunos adventure", this.titleStyle)
+        this.add.text(32, 32, "Tauno's adventure", this.titleStyle)
 
         // image of tauno
         this.character = this.add.image(100, 200, "tauno")

@@ -17,11 +17,11 @@ class Win extends Phaser.Scene {
 
         // Score 
         this.score = sessionStorage.getItem("score")
-        this.add.text(game.config.width / 2, 100, "your score: " + this.score, {fontSize: "32px"}).setOrigin(0.5)
+        this.add.text(game.config.width / 2, 100, "Your score: " + this.score, {fontSize: "32px"}).setOrigin(0.5)
         
         // High score
         this.highScore = sessionStorage.getItem("highscore") ?? 0;
-        this.add.text(game.config.width / 2, 130, "high score: " + this.highScore).setOrigin(0.5)
+        this.add.text(game.config.width / 2, 130, "High score: " + this.highScore).setOrigin(0.5)
 
         
         // update highscore if neccessary

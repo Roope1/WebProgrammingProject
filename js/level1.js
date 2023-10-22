@@ -2,8 +2,7 @@ class Level1 extends Phaser.Scene {
 
     constructor() {
         super("Level1")
-        this.wave2Spawned = false;
-        this.wave3Spawned = false;
+      
     }
 
     preload() {
@@ -126,6 +125,9 @@ class Level1 extends Phaser.Scene {
 
         this.startTime = Date.now()
         this.startScore = 300;
+
+        this.wave2Spawned = false;
+        this.wave3Spawned = false;
     }
     
     update() {
