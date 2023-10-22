@@ -5,7 +5,7 @@ class Level2 extends Phaser.Scene {
 
     preload() {
         // images and sprites
-        this.load.image("groundBlock", "./assets/images/Ground_SMB.png") // TODO: change to something copyright free
+        this.load.image("groundBlock", "./assets/images/Ground.png") // TODO: change to something copyright free
         this.load.spritesheet("player", "./assets/sprites/player_sprite.png", { frameWidth: 35, frameHeight: 60 })
         this.load.image("enemy", "./assets/images/goomba.jpg")
         this.load.image("portal", "./assets/images/portal.png")
