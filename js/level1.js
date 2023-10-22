@@ -11,7 +11,8 @@ class Level1 extends Phaser.Scene {
         this.load.spritesheet("player", "./assets/sprites/player_sprite.png", { frameWidth: 35, frameHeight: 60 })
         this.load.image("enemy", "./assets/images/enemy.png")
         this.load.image("portal", "./assets/images/portal.png")
-
+        this.load.image("coin", "./assets/images/coin.png")
+        this.load.image("bigCoin", "./assets/images/star_coin.png")
         //sounds
         this.load.audio("walk", "./assets/sounds/walk.mp3")
         this.load.audio("gameOver", "./assets/sounds/failure-2-89169.mp3")
@@ -51,19 +52,28 @@ class Level1 extends Phaser.Scene {
         for (let i = 0; i < 3; i++) {
             let block = this.fallingGroundGroup.create(2748 + i * 36, game.config.height / 2, "groundBlock")
         }
-
-
+        
+        
         // adding enemies
         addEnemy(1000, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
         addEnemy(1060, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
         addEnemy(1120, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
-
-
+        
+        
         // colliders between enemy and ground
         this.physics.add.collider(this.enemyGroup, this.groundGroup)
 
         // adding player to the scene
         this.player = this.physics.add.sprite(game.config.width / 2, game.config.height / 2, "player")
+
+        // adding coin to first platform
+        this.coin = this.physics.add.image(576, game.config.height / 3, "coin")
+        this.physics.add.overlap(this.player, this.coin, this.collectCoin, null, this)
+        
+        // add big coin to hole (hard to get)
+        this.bigCoin = this.physics.add.image(2820, game.config.height / 1.2, "bigCoin");
+        this.bigCoin.scale = 2
+        this.physics.add.overlap(this.player, this.bigCoin, this.collectBigCoin, null, this)
 
         //player gravity
         this.player.body.gravity.y = gameOptions.gravity
@@ -99,7 +109,6 @@ class Level1 extends Phaser.Scene {
 
         // enemies should always be moving left
         this.enemyGroup.setVelocityX(-100)
-
 
         // get volume from sessionStorage
         this.volume = sessionStorage.getItem("volume")
@@ -221,6 +230,17 @@ class Level1 extends Phaser.Scene {
                
             }
         }
+    }
+
+    collectCoin(player, coin) {
+        this.startScore += 5;
+        coin.disableBody(true, true)
+        // TODO: add bling sound
+    }
+
+    collectBigCoin(player, coin) {
+        this.startScore += 10;
+        coin.disableBody(true, true)
     }
 
     nextLevel() {
