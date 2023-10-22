@@ -21,10 +21,10 @@ window.onload = () => {
             default: "arcade",
         },
         scene: [
+            Win,
             Menu,
             Level1,  // TODO: add menu back before submitting
             Level2,
-            Win,
         ]
     }
 

@@ -43,6 +43,8 @@ class Menu extends Phaser.Scene {
         
         sessionStorage.setItem("volume", 1)
 
+        // stop all audio in menu to stop the bg music from playing multiple times
+        this.game.sound.stopAll()
 
         volume.on('pointerup', () => {
             if (sessionStorage.getItem("volume") == 0) {
