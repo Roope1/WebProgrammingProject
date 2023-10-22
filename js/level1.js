@@ -2,6 +2,8 @@ class Level1 extends Phaser.Scene {
 
     constructor() {
         super("Level1")
+        this.wave2Spawned = false;
+        this.wave3Spawned = false;
     }
 
     preload() {
@@ -25,6 +27,11 @@ class Level1 extends Phaser.Scene {
             allowGravity: false,
         })
 
+        this.fallingGroundGroup = this.physics.add.group({
+            immovable: false,
+            allowGravity: true,
+        })
+
         this.enemyGroup = this.physics.add.group({
             allowGravity: true
         })
@@ -34,14 +41,18 @@ class Level1 extends Phaser.Scene {
         // adding platforms to the game
         // start platform
         addPlatform(3, 540, game.config.height / 2, "groundBlock", this)
-
+        
         // mid level "ramp"
         for (let i = 0; i < 4; i++) {
             addPlatform(4 - i, 1298 + (i * 36), game.config.height / 1.2 - ((i + 1) * 36), "groundBlock", this)
         }
+        
+        // platfroms on top of big hole (falling)
+        //addPlatform(3, 2748, game.config.height / 2, "groundBlock", this)
+        for (let i = 0; i < 3; i++) {
+            let block = this.fallingGroundGroup.create(2748 + i * 36, game.config.height / 2, "groundBlock")
+        }
 
-        // platfroms on top of big hole
-        addPlatform(3, 2748, game.config.height / 2, "groundBlock", this)
 
         // adding enemies
         addEnemy(1000, game.config.height * 2 / 3, "enemy", gameOptions.gravity, this)
@@ -57,7 +68,7 @@ class Level1 extends Phaser.Scene {
 
         //player gravity
         this.player.body.gravity.y = gameOptions.gravity
-
+        this.physics.add.collider(this.player, this.fallingGroundGroup)
         this.physics.add.collider(this.player, this.groundGroup)
         this.physics.add.overlap(this.player, this.enemyGroup, this.checkHit, null, this)
 
