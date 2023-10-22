@@ -12,7 +12,7 @@ window.onload = () => {
         type: Phaser.AUTO,
         backgroundColor: "#2222FF",
         scale: {
-            mode: Phaser.Scale.FIT,
+            mode: Phaser.Scale.NONE,
             width: 800,
             height: 400,
         },
@@ -21,11 +21,12 @@ window.onload = () => {
             default: "arcade",
         },
         scene: [
-            Win,
             Menu,
             Level1,  // TODO: add menu back before submitting
             Level2,
-        ]
+            Win,
+        ],
+        parent: "game"
     }
 
     game = new Phaser.Game(gameConfig)
