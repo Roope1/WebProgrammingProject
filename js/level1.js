@@ -6,7 +6,7 @@ class Level1 extends Phaser.Scene {
 
     preload() {
         // images and sprites
-        this.load.image("groundBlock", "./assets/images/Ground_SMB.png") // TODO: change to something copyright free
+        this.load.image("groundBlock", "./assets/images/Ground.png")
         this.load.spritesheet("player", "./assets/sprites/player_sprite.png", { frameWidth: 35, frameHeight: 60 })
         this.load.image("enemy", "./assets/images/goomba.jpg")
         this.load.image("portal", "./assets/images/portal.png")
@@ -191,7 +191,6 @@ class Level1 extends Phaser.Scene {
         for (let i = 0; i < 40; i++) {
             for (let j = 0; j < 4; j++) {
                 let block = this.groundGroup.create(36 * i, game.config.height / 1.2 + (36 * j), "groundBlock")
-                block.scale = 0.1
             }
         }
 
@@ -199,7 +198,6 @@ class Level1 extends Phaser.Scene {
         for (let i = 0; i < 25; i++) {
             for (let j = 0; j < 4; j++) {
                 let block = this.groundGroup.create(1700 + 36 * i, game.config.height / 1.2 + (36 * j), "groundBlock")
-                block.scale = 0.1
             }
         }
 
@@ -207,7 +205,7 @@ class Level1 extends Phaser.Scene {
         for (let i = 0; i < 25; i++) {
             for (let j = 0; j < 4; j++) {
                 let block = this.groundGroup.create(3016 + 36 * i, game.config.height / 1.2 + (36 * j), "groundBlock")
-                block.scale = 0.1
+               
             }
         }
     }
